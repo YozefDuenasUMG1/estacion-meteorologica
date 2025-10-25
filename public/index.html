@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estacion Meteorologica - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Estacion Meteorologica IoT</h1>
+            <p class="subtitle">Monitoreo en Tiempo Real</p>
+        </header>
+
+        <!-- Panel de Alertas -->
+        <div id="alertas-container" class="alertas-container"></div>
+
+        <!-- Tarjetas de Sensores -->
+        <div class="cards-grid">
+            <!-- Temperatura -->
+            <div class="card temperatura-card">
+                <div class="card-header">
+                    <h2>Temperatura</h2>
+                    <span class="icon">🌡️</span>
+                </div>
+                <div class="card-body">
+                    <div class="valor-actual">
+                        <span id="temp-actual">--</span>
+                        <span class="unidad">°C</span>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="label">Min:</span>
+                            <span id="temp-min">--</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Max:</span>
+                            <span id="temp-max">--</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Prom:</span>
+                            <span id="temp-prom">--</span>
+                        </div>
+                    </div>
+                    <div class="ultima-actualizacion" id="temp-fecha">--</div>
+                </div>
+            </div>
+
+            <!-- Humedad -->
+            <div class="card humedad-card">
+                <div class="card-header">
+                    <h2>Humedad</h2>
+                    <span class="icon">💧</span>
+                </div>
+                <div class="card-body">
+                    <div class="valor-actual">
+                        <span id="hum-actual">--</span>
+                        <span class="unidad">%</span>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="label">Min:</span>
+                            <span id="hum-min">--</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Max:</span>
+                            <span id="hum-max">--</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Prom:</span>
+                            <span id="hum-prom">--</span>
+                        </div>
+                    </div>
+                    <div class="ultima-actualizacion" id="hum-fecha">--</div>
+                </div>
+            </div>
+
+            <!-- Presion -->
+            <div class="card presion-card">
+                <div class="card-header">
+                    <h2>Presion</h2>
+                    <span class="icon">🎈</span>
+                </div>
+                <div class="card-body">
+                    <div class="valor-actual">
+                        <span id="pres-actual">--</span>
+                        <span class="unidad">hPa</span>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="label">Min:</span>
+                            <span id="pres-min">--</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Max:</span>
+                            <span id="pres-max">--</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Prom:</span>
+                            <span id="pres-prom">--</span>
+                        </div>
+                    </div>
+                    <div class="ultima-actualizacion" id="pres-fecha">--</div>
+                </div>
+            </div>
+
+            <!-- Lluvia -->
+            <div class="card lluvia-card">
+                <div class="card-header">
+                    <h2>Lluvia</h2>
+                    <span class="icon">🌧️</span>
+                </div>
+                <div class="card-body">
+                    <div class="valor-actual estado-lluvia" id="lluvia-actual">
+                        <span>--</span>
+                    </div>
+                    <div class="ultima-actualizacion" id="lluvia-fecha">--</div>
+                </div>
+            </div>
+
+            <!-- Humedad Suelo -->
+            <div class="card suelo-card">
+                <div class="card-header">
+                    <h2>Humedad Suelo</h2>
+                    <span class="icon">🌱</span>
+                </div>
+                <div class="card-body">
+                    <div class="valor-actual">
+                        <span id="suelo-actual">--</span>
+                        <span class="unidad">RAW</span>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="label">Min:</span>
+                            <span id="suelo-min">--</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Max:</span>
+                            <span id="suelo-max">--</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Prom:</span>
+                            <span id="suelo-prom">--</span>
+                        </div>
+                    </div>
+                    <div class="ultima-actualizacion" id="suelo-fecha">--</div>
+                </div>
+            </div>
+
+            <!-- Gas -->
+            <div class="card gas-card">
+                <div class="card-header">
+                    <h2>Calidad del Aire</h2>
+                    <span class="icon">💨</span>
+                </div>
+                <div class="card-body">
+                    <div class="valor-actual">
+                        <span id="gas-actual">--</span>
+                        <span class="unidad">PPM</span>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="label">Min:</span>
+                            <span id="gas-min">--</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Max:</span>
+                            <span id="gas-max">--</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Prom:</span>
+                            <span id="gas-prom">--</span>
+                        </div>
+                    </div>
+                    <div class="ultima-actualizacion" id="gas-fecha">--</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros de Busqueda -->
+        <section class="filtros-section">
+            <h2>Busqueda Avanzada</h2>
+            <div class="filtros-container">
+                <div class="filtro-group">
+                    <label for="sensor-select">Sensor:</label>
+                    <select id="sensor-select">
+                        <option value="temperatura">Temperatura</option>
+                        <option value="humedad">Humedad</option>
+                        <option value="presion">Presion</option>
+                        <option value="lluvia">Lluvia</option>
+                        <option value="humedad-suelo">Humedad Suelo</option>
+                        <option value="gas">Calidad Aire</option>
+                    </select>
+                </div>
+
+                <div class="filtro-group">
+                    <label for="fecha-inicio">Fecha Inicio:</label>
+                    <input type="date" id="fecha-inicio">
+                </div>
+
+                <div class="filtro-group">
+                    <label for="fecha-fin">Fecha Fin:</label>
+                    <input type="date" id="fecha-fin">
+                </div>
+
+                <div class="filtro-group">
+                    <label for="rango-valores">Rango (ej: 20-30):</label>
+                    <input type="text" id="rango-valores" placeholder="min-max">
+                    <small class="help-text">Formato: numero-numero</small>
+                </div>
+
+                <div class="filtro-group">
+                    <label for="limit">Limite:</label>
+                    <input type="number" id="limit" value="50" min="1" max="500">
+                </div>
+
+                <button id="btn-buscar" class="btn-primary">Buscar</button>
+                <button id="btn-limpiar" class="btn-secondary">Limpiar</button>
+            </div>
+            <div id="errores-busqueda" class="error-message"></div>
+        </section>
+
+        <!-- Graficos Historicos -->
+        <section class="graficos-section">
+            <h2>Graficos Historicos</h2>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-sensor="temperatura">Temperatura</button>
+                <button class="tab-btn" data-sensor="humedad">Humedad</button>
+                <button class="tab-btn" data-sensor="presion">Presion</button>
+                <button class="tab-btn" data-sensor="humedad-suelo">Humedad Suelo</button>
+                <button class="tab-btn" data-sensor="gas">Calidad Aire</button>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="chartHistorico"></canvas>
+            </div>
+        </section>
+
+        <!-- Tabla de Resultados -->
+        <section class="tabla-section">
+            <h2>Resultados de Busqueda</h2>
+            <div id="info-resultados" class="info-resultados"></div>
+            <div class="table-container">
+                <table id="tabla-resultados">
+                    <thead>
+                        <tr id="tabla-header">
+                            <th>ID</th>
+                            <th>Valor</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-body">
+                        <tr>
+                            <td colspan="3" class="no-data">Realiza una busqueda para ver resultados</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="paginacion" id="paginacion"></div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Sistema de Monitoreo Meteorologico - 2025</p>
+            <p>Actualizacion automatica cada 10 segundos</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

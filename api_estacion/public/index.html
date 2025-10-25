@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Estación Meteorológica IoT</title>
+<style>
+body { font-family: Arial; text-align: center; background: #eef; }
+table { margin: 20px auto; border-collapse: collapse; width: 90%; }
+th, td { border: 1px solid #666; padding: 6px; }
+th { background-color: #4CAF50; color: white; }
+</style>
+<script>
+async function cargarDatos() {
+  const res = await fetch("http://localhost:3000/api/lecturas");
+  const datos = await res.json();
+  const tabla = document.getElementById("tabla");
+  tabla.innerHTML = "";
+  datos.forEach(d => {
+    tabla.innerHTML += `
+      <tr>
+        <td>${d.id}</td>
+        <td>${d.temperatura.toFixed(1)} °C</td>
+        <td>${d.humedad.toFixed(1)} %</td>
+        <td>${d.presion.toFixed(1)} hPa</td>
+        <td>${d.lluvia}</td>
+        <td>${d.humedadSuelo}</td>
+        <td>${d.gas}</td>
+        <td>${d.fecha}</td>
+      </tr>`;
+  });
+}
+setInterval(cargarDatos, 5000);
+</script>
+</head>
+<body onload="cargarDatos()">
+  <h2>🌤️ Estación Meteorológica IoT</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Temp</th><th>Humedad</th><th>Presión</th>
+        <th>Lluvia</th><th>H. Suelo</th><th>Gas</th><th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody id="tabla"></tbody>
+  </table>
+</body>
+</html>
